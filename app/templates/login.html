@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresar | Sport Store</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body.login-page {
+            background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+            font-family: 'Roboto', Arial, sans-serif;
+            color: #f5f5f5;
+            min-height: 100vh;
+        }
+        .login-container {
+            background: rgba(255,255,255,0.10);
+            max-width: 420px;
+            margin: 3rem auto 2rem auto;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px #0004;
+            padding: 2.5rem 2rem 2rem 2rem;
+            backdrop-filter: blur(4px);
+        }
+        .login-title {
+            font-family: 'Montserrat', Arial Black, Arial, sans-serif;
+            font-size: 2.2rem;
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+        .form-group {
+            margin-bottom: 1.3rem;
+        }
+        .form-group label {
+            color: #ffd700;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            border: none;
+            background: #23234b;
+            color: #fff;
+            font-size: 1rem;
+            margin-top: 0.2rem;
+        }
+        .form-control:focus {
+            outline: 2px solid #00fff7;
+            background: #23234b;
+        }
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(90deg, #ffd700 0%, #00fff7 100%);
+            color: #23234b;
+            font-weight: 900;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem 0;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #00fff7 0%, #ffd700 100%);
+            color: #23234b;
+        }
+        .login-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            color: #00fff7;
+            margin-bottom: 1rem;
+        }
+        .mt-3 {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        .mt-3 a {
+            color: #ffd700;
+            text-decoration: underline;
+        }
+        .flash-message, .alert {
+            background: #ffd700;
+            color: #23234b;
+            border-radius: 6px;
+            padding: 0.7rem 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="login-page">
+    <header>
+        <a href="/" class="logo">
+            <i class="fas fa-dumbbell"></i>
+            <span>Sport Store</span>
+        </a>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/categorias">Categorías</a>
+            <a href="/carrito">Carrito</a>
+            <a href="/login" class="active">Ingresar</a>
+            <a href="/register">Registrarse</a>
+        </nav>
+    </header>
+    <main>
+        <div class="login-container">
+            <div class="login-icon">
+                <i class="fas fa-sign-in-alt"></i>
+            </div>
+            <div class="login-title">Ingreso Deportivo</div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form method="post" action="{{ url_for('auth.login') }}">
+                <div class="form-group">
+                    <label for="nameUser"><i class="fas fa-user"></i> Usuario</label>
+                    <input type="text" name="nameUser" id="nameUser" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="passwordUser"><i class="fas fa-lock"></i> Contraseña</label>
+                    <input type="password" name="passwordUser" id="passwordUser" class="form-control" required>
+                </div>
+                <button type="submit" class="btn-primary">Ingresar</button>
+            </form>
+            <div class="mt-3">
+                <a href="{{ url_for('register.register') }}">¿No tienes cuenta? Regístrate</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <a href="/faq"><i class="fas fa-question-circle"></i> Preguntas frecuentes</a> |
+        <a href="/devoluciones"><i class="fas fa-exchange-alt"></i> Devoluciones</a> |
+        <a href="/contacto"><i class="fas fa-envelope"></i> Contacto</a>
+        <p>&copy; 2025 SportStore Pro</p>
+    </footer>
+
+    <script src="/static/js/login.js"></script>
+    <script>
+        // Mostrar los mensajes flash por 5 segundos y luego ocultarlos
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            if (alerts.length > 0) {
+                setTimeout(() => {
+                    alerts.forEach(alert => {
+                        alert.style.opacity = '0';
+                        setTimeout(() => alert.remove(), 500);
+                    });
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>

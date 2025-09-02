@@ -1,0 +1,126 @@
+<!-- categorias.html - Listado de categorías deportivas -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorías - SportStore Pro</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-running"></i> SportStore Pro</h1>
+        <nav>
+            <a href="/" class="nav-link"><i class="fas fa-home"></i> Inicio</a>
+            <a href="/categorias" class="nav-link"><i class="fas fa-th-large"></i> Categorías</a>
+            <a href="/carrito" class="nav-link"><i class="fas fa-shopping-cart"></i> Carrito</a>
+            {% if current_user.is_authenticated %}
+                <a href="/logout" class="nav-link" style="color: #d32f2f;"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+            {% else %}
+                <a href="/login" class="nav-link"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
+                <a href="/register" class="nav-link"><i class="fas fa-user-plus"></i> Registrarse</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        <h2><i class="fas fa-trophy"></i> Nuestras Categorías</h2>
+        {% if categorias %}
+        <div class="categories-grid">
+            {% for cat in categorias %}
+            <a href="{{ cat.url }}" class="category-card">
+                <div class="category-overlay" style="
+                    {% if cat.nombre == 'Fútbol' %}
+                        background: linear-gradient(135deg, rgba(102, 187, 106, 0.9) 0%, rgba(67, 160, 71, 0.9) 100%);
+                    {% elif cat.nombre == 'Baloncesto' %}
+                        background: linear-gradient(135deg, rgba(255, 112, 67, 0.9) 0%, rgba(244, 81, 30, 0.9) 100%);
+                    {% elif cat.nombre == 'Tenis' %}
+                        background: linear-gradient(135deg, rgba(255, 215, 0, 0.9) 0%, rgba(255, 160, 0, 0.9) 100%);
+                    {% elif cat.nombre == 'Natación' %}
+                        background: linear-gradient(135deg, rgba(41, 182, 246, 0.9) 0%, rgba(2, 136, 209, 0.9) 100%);
+                    {% elif cat.nombre == 'Ciclismo' %}
+                        background: linear-gradient(135deg, rgba(236, 64, 122, 0.9) 0%, rgba(216, 27, 96, 0.9) 100%);
+                    {% elif cat.nombre == 'Camping' %}
+                        background: linear-gradient(135deg, rgba(141, 110, 99, 0.9) 0%, rgba(93, 64, 55, 0.9) 100%);
+                    {% elif cat.nombre == 'Fitness' %}
+                        background: linear-gradient(135deg, rgba(126, 87, 194, 0.9) 0%, rgba(94, 53, 177, 0.9) 100%);
+                    {% else %}
+                        background: linear-gradient(135deg, rgba(120, 144, 156, 0.9) 0%, rgba(84, 110, 122, 0.9) 100%);
+                    {% endif %}
+                ">
+                    <img src="{{ cat.imagen }}" alt="{{ cat.nombre }}" class="category-image">
+                    <div class="category-content">
+                        <h3 class="category-title">
+                            {% if cat.nombre == 'Fútbol' %}
+                                <i class="fas fa-futbol"></i>
+                            {% elif cat.nombre == 'Baloncesto' %}
+                                <i class="fas fa-basketball-ball"></i>
+                            {% elif cat.nombre == 'Tenis' %}
+                                <i class="fas fa-table-tennis"></i>
+                            {% elif cat.nombre == 'Natación' %}
+                                <i class="fas fa-swimming-pool"></i>
+                            {% elif cat.nombre == 'Ciclismo' %}
+                                <i class="fas fa-bicycle"></i>
+                            {% elif cat.nombre == 'Camping' %}
+                                <i class="fas fa-campground"></i>
+                            {% elif cat.nombre == 'Fitness' %}
+                                <i class="fas fa-dumbbell"></i>
+                            {% else %}
+                                <i class="fas fa-shopping-bag"></i>
+                            {% endif %}
+                            {{ cat.nombre }}
+                        </h3>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% if productos %}
+        <h3 class="section-title">
+            <i class="fas fa-store"></i> 
+            Productos en {{ categoria }}
+        </h3>
+        <div class="products-grid">
+            {% for producto in productos %}
+            <div class="product-card">
+                <a href="/producto/{{ producto.id }}" class="product-link">
+                    <div class="product-image-container">
+                        <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}" class="product-image">
+                        <div class="product-overlay">
+                            <span class="view-details">Ver Detalles</span>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h4 class="product-title">{{ producto.nombre }}</h4>
+                        {% if producto.descripcion %}
+                        <p class="product-description">
+                            {{ producto.descripcion }}
+                        </p>
+                        {% endif %}
+                        <div class="product-footer">
+                            <p class="product-price">
+                                <i class="fas fa-tag"></i> 
+                                ${{ '{:,.0f}'.format(producto.precio) }}
+                            </p>
+                            <button class="btn-add-cart">
+                                <i class="fas fa-shopping-cart"></i> 
+                                Agregar
+                            </button>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </main>
+    <footer>
+        <a href="/faq">Preguntas frecuentes</a> |
+        <a href="/devoluciones">Devoluciones</a> |
+        <a href="/contacto">Contacto</a>
+        <p>&copy; 2025 SportStore Pro</p>
+    </footer>
+</body>
+</html>
