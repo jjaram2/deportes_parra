@@ -1035,9 +1035,8 @@
                 {% endif %}
             </div>
         </header>
-    {% if not current_user.is_authenticated %}
     <main>
-                <div class="banner">
+        <div class="banner">
             <div class="banner-content">
                 <h1>Descubre tu potencial deportivo</h1>
                 <p>Equipamiento de alta calidad para todos los deportes</p>
@@ -1045,86 +1044,104 @@
             </div>
         </div>
         <section class="categorias">
-            <h2 style="text-align:center;font-size:2.7rem;font-family:'Montserrat',sans-serif;font-weight:900;color:#222;margin-bottom:2.5rem;letter-spacing:1px;">Categorías Destacadas</h2>
-            <div class="categorias-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2.5rem;max-width:1200px;margin:0 auto;">
-                <div class="categoria-card" style="background:#fff;border-radius:18px;box-shadow:0 6px 32px rgba(44,62,80,0.10);overflow:hidden;display:flex;flex-direction:column;align-items:center;transition:transform 0.2s;">
-                    <div style="width:100%;height:180px;background:#27ae60;display:flex;align-items:center;justify-content:center;position:relative;">
-                        <img src="https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=400&q=80" alt="Fútbol" style="height:140px;width:auto;max-width:90%;border-radius:12px;box-shadow:0 2px 12px #2222;object-fit:cover;">
-                        <span style="position:absolute;left:1.5rem;top:1.5rem;font-size:2.2rem;color:#fff;"><i class="fas fa-futbol"></i></span>
-                    </div>
-                    <div class="categoria-info" style="padding:2rem 1.2rem 1.5rem 1.2rem;text-align:center;">
-                        <h3 style="font-size:1.35rem;font-family:'Montserrat',sans-serif;font-weight:800;color:#27ae60;margin-bottom:0.5rem;letter-spacing:0.5px;">Fútbol</h3>
-                        <p style="color:#555;font-size:1rem;margin-bottom:1.2rem;">Botines, balones, uniformes y accesorios para cancha y entrenamiento.</p>
-                        <a href="/categorias/futbol" style="display:inline-block;padding:0.7rem 1.7rem;background:#27ae60;color:#fff;font-weight:700;border-radius:30px;font-size:1rem;box-shadow:0 2px 8px #27ae6040;transition:background 0.2s;letter-spacing:0.5px;text-decoration:none;"><i class="fas fa-futbol"></i> Ver productos</a>
+            <h2 class="section-title">Categorías Destacadas</h2>
+            <div class="categorias-grid">
+                <div class="categoria-card">
+                    <img src="/static/img/categorias/futbol.jpg" alt="Fútbol">
+                    <div class="categoria-info">
+                        <h3>Fútbol</h3>
+                        <p>Botines, balones, uniformes y accesorios para cancha y entrenamiento.</p>
+                        <a href="/categoria/futbol" class="categoria-link"><i class="fas fa-futbol"></i> Ver productos</a>
                     </div>
                 </div>
-                <div class="categoria-card" style="background:#fff;border-radius:18px;box-shadow:0 6px 32px rgba(44,62,80,0.10);overflow:hidden;display:flex;flex-direction:column;align-items:center;transition:transform 0.2s;">
-                    <div style="width:100%;height:180px;background:#e67e22;display:flex;align-items:center;justify-content:center;position:relative;">
-                        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=400&q=80" alt="Baloncesto" style="height:140px;width:auto;max-width:90%;border-radius:12px;box-shadow:0 2px 12px #2222;object-fit:cover;">
-                        <span style="position:absolute;left:1.5rem;top:1.5rem;font-size:2.2rem;color:#fff;"><i class="fas fa-basketball-ball"></i></span>
-                    </div>
-                    <div class="categoria-info" style="padding:2rem 1.2rem 1.5rem 1.2rem;text-align:center;">
-                        <h3 style="font-size:1.35rem;font-family:'Montserrat',sans-serif;font-weight:800;color:#e67e22;margin-bottom:0.5rem;letter-spacing:0.5px;">Baloncesto</h3>
-                        <p style="color:#555;font-size:1rem;margin-bottom:1.2rem;">Balones, camisetas, shorts y zapatillas para la cancha.</p>
-                        <a href="/categorias/baloncesto" style="display:inline-block;padding:0.7rem 1.7rem;background:#e67e22;color:#fff;font-weight:700;border-radius:30px;font-size:1rem;box-shadow:0 2px 8px #e67e2240;transition:background 0.2s;letter-spacing:0.5px;text-decoration:none;"><i class="fas fa-basketball-ball"></i> Ver productos</a>
+                <div class="categoria-card">
+                    <img src="/static/img/categorias/baloncesto.jpg" alt="Baloncesto">
+                    <div class="categoria-info">
+                        <h3>Baloncesto</h3>
+                        <p>Balones, camisetas, shorts y zapatillas para la cancha.</p>
+                        <a href="/categoria/baloncesto" class="categoria-link"><i class="fas fa-basketball-ball"></i> Ver productos</a>
                     </div>
                 </div>
-                <div class="categoria-card" style="background:#fff;border-radius:18px;box-shadow:0 6px 32px rgba(44,62,80,0.10);overflow:hidden;display:flex;flex-direction:column;align-items:center;transition:transform 0.2s;">
-                    <div style="width:100%;height:180px;background:#2980b9;display:flex;align-items:center;justify-content:center;position:relative;">
-                        <img src="https://images.unsplash.com/photo-1517960413843-0aee8e2d471c?auto=format&fit=crop&w=400&q=80" alt="Tenis" style="height:140px;width:auto;max-width:90%;border-radius:12px;box-shadow:0 2px 12px #2222;object-fit:cover;">
-                        <span style="position:absolute;left:1.5rem;top:1.5rem;font-size:2.2rem;color:#fff;"><i class="fas fa-table-tennis"></i></span>
-                    </div>
-                    <div class="categoria-info" style="padding:2rem 1.2rem 1.5rem 1.2rem;text-align:center;">
-                        <h3 style="font-size:1.35rem;font-family:'Montserrat',sans-serif;font-weight:800;color:#2980b9;margin-bottom:0.5rem;letter-spacing:0.5px;">Tenis</h3>
-                        <p style="color:#555;font-size:1rem;margin-bottom:1.2rem;">Raquetas, pelotas, ropa y calzado para dominar la pista.</p>
-                        <a href="/categorias/tenis" style="display:inline-block;padding:0.7rem 1.7rem;background:#2980b9;color:#fff;font-weight:700;border-radius:30px;font-size:1rem;box-shadow:0 2px 8px #2980b940;transition:background 0.2s;letter-spacing:0.5px;text-decoration:none;"><i class="fas fa-table-tennis"></i> Ver productos</a>
+                <div class="categoria-card">
+                    <img src="/static/img/categorias/tenis.jpg" alt="Tenis">
+                    <div class="categoria-info">
+                        <h3>Tenis</h3>
+                        <p>Raquetas, pelotas, ropa y calzado para dominar la pista.</p>
+                        <a href="/categoria/tenis" class="categoria-link"><i class="fas fa-table-tennis"></i> Ver productos</a>
                     </div>
                 </div>
-                <div class="categoria-card" style="background:#fff;border-radius:18px;box-shadow:0 6px 32px rgba(44,62,80,0.10);overflow:hidden;display:flex;flex-direction:column;align-items:center;transition:transform 0.2s;">
-                    <div style="width:100%;height:180px;background:#8e44ad;display:flex;align-items:center;justify-content:center;position:relative;">
-                        <img src="https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80" alt="Fitness" style="height:140px;width:auto;max-width:90%;border-radius:12px;box-shadow:0 2px 12px #2222;object-fit:cover;">
-                        <span style="position:absolute;left:1.5rem;top:1.5rem;font-size:2.2rem;color:#fff;"><i class="fas fa-dumbbell"></i></span>
+                <div class="categoria-card">
+                    <img src="/static/img/categorias/natacion.jpg" alt="Natación">
+                    <div class="categoria-info">
+                        <h3>Natación</h3>
+                        <p>Gafas, trajes, gorros y accesorios para nadadores profesionales y aficionados.</p>
+                        <a href="/categoria/natacion" class="categoria-link"><i class="fas fa-swimming-pool"></i> Ver productos</a>
                     </div>
-                    <div class="categoria-info" style="padding:2rem 1.2rem 1.5rem 1.2rem;text-align:center;">
-                        <h3 style="font-size:1.35rem;font-family:'Montserrat',sans-serif;font-weight:800;color:#8e44ad;margin-bottom:0.5rem;letter-spacing:0.5px;">Fitness</h3>
-                        <p style="color:#555;font-size:1rem;margin-bottom:1.2rem;">Pesas, ropa deportiva, bandas y accesorios para tu entrenamiento.</p>
-                        <a href="/categorias/fitness" style="display:inline-block;padding:0.7rem 1.7rem;background:#8e44ad;color:#fff;font-weight:700;border-radius:30px;font-size:1rem;box-shadow:0 2px 8px #8e44ad40;transition:background 0.2s;letter-spacing:0.5px;text-decoration:none;"><i class="fas fa-dumbbell"></i> Ver productos</a>
+                </div>
+                <div class="categoria-card">
+                    <img src="/static/img/categorias/ciclismo.jpg" alt="Ciclismo">
+                    <div class="categoria-info">
+                        <h3>Ciclismo</h3>
+                        <p>Bicicletas, cascos, guantes y uniformes para ciclistas de todos los niveles.</p>
+                        <a href="/categoria/ciclismo" class="categoria-link"><i class="fas fa-bicycle"></i> Ver productos</a>
+                    </div>
+                </div>
+                <div class="categoria-card">
+                    <img src="/static/img/categorias/camping.jpg" alt="Camping">
+                    <div class="categoria-info">
+                        <h3>Camping</h3>
+                        <p>Carpas, mochilas, linternas y kits para tus aventuras al aire libre.</p>
+                        <a href="/categoria/camping" class="categoria-link"><i class="fas fa-campground"></i> Ver productos</a>
+                    </div>
+                </div>
+                <div class="categoria-card">
+                    <img src="/static/img/categorias/fitness.jpg" alt="Fitness">
+                    <div class="categoria-info">
+                        <h3>Fitness</h3>
+                        <p>Pesas, ropa deportiva, bandas y accesorios para tu entrenamiento.</p>
+                        <a href="/categoria/fitness" class="categoria-link"><i class="fas fa-dumbbell"></i> Ver productos</a>
+                    </div>
+                </div>
+                <div class="categoria-card">
+                    <img src="/static/img/categorias/accesorios.jpg" alt="Accesorios">
+                    <div class="categoria-info">
+                        <h3>Accesorios</h3>
+                        <p>Botellas, bolsos, toallas y tecnología deportiva para complementar tu rutina.</p>
+                        <a href="/categoria/accesorios" class="categoria-link"><i class="fas fa-shopping-bag"></i> Ver productos</a>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- Sección mejorada de Productos Exclusivos -->
-        <section class="productos-exclusivos">
-            <h2>Productos Exclusivos</h2>
-            <div class="productos-grid">
+        <section class="productos-exclusivo">
+            <h2 class="section-title">Productos Exclusivos</h2>
+            <div class="productos-exclusivo">
                 <div class="producto-card">
-                    <img src="https://images.unsplash.com/photo-1515548212235-dc6ffb8749d0?auto=format&fit=crop&w=400&q=80" alt="Zapatillas Nike Mercurial" onerror="this.src='https://via.placeholder.com/190x190?text=Zapatillas'">
-                    <h4>Zapatillas Nike Mercurial</h4>
-                    <p>Explosividad y control para fútbol profesional</p>
-                    <a href="/categorias/futbol" class="producto-link">Ver más</a>
+                    <img src="/static/img/productos/zapatillas.jpg" alt="Zapatillas Nike Mercurial" onerror="this.src='/static/img/productos/zapatillas.jpg'">
+                    <h4 style="color:#ffd700;">Zapatillas Nike Mercurial</h4>
+                    <p style="color:#00fff7;font-weight:bold;">Explosividad y control para fútbol profesional</p>
+                    <a href="/categoria/futbol" style="color:#ffd700;font-weight:700;text-decoration:underline;font-size:1rem;">Ver más</a>
                 </div>
                 <div class="producto-card">
-                    <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=400&q=80" alt="Camiseta Adidas Training" onerror="this.src='https://via.placeholder.com/190x190?text=Camiseta'">
-                    <h4>Camiseta Adidas Training</h4>
-                    <p>Transpirable y ligera para cualquier deporte</p>
-                    <a href="/categorias/fitness" class="producto-link">Ver más</a>
+                    <img src="/static/img/productos/camiseta.jpg" alt="Camiseta Adidas Training" onerror="this.src='/static/img/productos/camiseta.jpg'">
+                    <h4 style="color:#ffd700;">Camiseta Adidas Training</h4>
+                    <p style="color:#00fff7;font-weight:bold;">Transpirable y ligera para cualquier deporte</p>
+                    <a href="/categoria/fitness" style="color:#ffd700;font-weight:700;text-decoration:underline;font-size:1rem;">Ver más</a>
                 </div>
                 <div class="producto-card">
-                    <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=400&q=80" alt="Balón Spalding NBA" onerror="this.src='https://via.placeholder.com/190x190?text=Balon'">
-                    <h4>Balón Spalding NBA</h4>
-                    <p>El balón oficial para tus partidos de baloncesto</p>
-                    <a href="/categorias/baloncesto" class="producto-link">Ver más</a>
+                    <img src="/static/img/productos/balon.jpg" alt="Balón Spalding NBA" onerror="this.src='/static/img/productos/balon.jpg'">
+                    <h4 style="color:#ffd700;">Balón Spalding NBA</h4>
+                    <p style="color:#00fff7;font-weight:bold;">El balón oficial para tus partidos de baloncesto</p>
+                    <a href="/categoria/baloncesto" style="color:#ffd700;font-weight:700;text-decoration:underline;font-size:1rem;">Ver más</a>
                 </div>
                 <div class="producto-card">
-                    <img src="https://images.unsplash.com/photo-1517960413843-0aee8e2d471c?auto=format&fit=crop&w=400&q=80" alt="Raqueta Wilson Pro Staff" onerror="this.src='https://via.placeholder.com/190x190?text=Raqueta'">
-                    <h4>Raqueta Wilson Pro Staff</h4>
-                    <p>Potencia y precisión para jugadores de tenis</p>
-                    <a href="/categorias/tenis" class="producto-link">Ver más</a>
+                    <img src="/static/img/productos/raqueta.jpg" alt="Raqueta Wilson Pro Staff" onerror="this.src='/static/img/productos/raqueta.jpg'">
+                    <h4 style="color:#ffd700;">Raqueta Wilson Pro Staff</h4>
+                    <p style="color:#00fff7;font-weight:bold;">Potencia y precisión para jugadores de tenis</p>
+                    <a href="/categoria/tenis" style="color:#ffd700;font-weight:700;text-decoration:underline;font-size:1rem;">Ver más</a>
                 </div>
             </div>
         </section>
     </main>
-    {% endif %}
             <footer>
             <div class="footer-content">
                 <div class="footer-section">
