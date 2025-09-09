@@ -49,7 +49,7 @@
                         background: linear-gradient(135deg, rgba(120, 144, 156, 0.9) 0%, rgba(84, 110, 122, 0.9) 100%);
                     {% endif %}
                 ">
-                    <img src="{{ cat.imagen }}" alt="{{ cat.nombre }}" class="category-image">
+                    <img src="{% if cat.nombre == 'Fútbol' %}/static/img/categorias/futbol.jpg{% elif cat.nombre == 'Baloncesto' %}/static/img/categorias/baloncesto.jpg{% elif cat.nombre == 'Tenis' %}/static/img/categorias/tenis.jpg{% elif cat.nombre == 'Natación' %}/static/img/categorias/natacion.jpg{% elif cat.nombre == 'Ciclismo' %}/static/img/categorias/ciclismo.jpg{% elif cat.nombre == 'Camping' %}/static/img/categorias/camping.jpg{% elif cat.nombre == 'Fitness' %}/static/img/categorias/fitness.jpg{% else %}/static/img/categorias/accesorios.jpg{% endif %}" alt="{{ cat.nombre }}" class="category-image">
                     <div class="category-content">
                         <h3 class="category-title">
                             {% if cat.nombre == 'Fútbol' %}
@@ -102,7 +102,7 @@
                         <div class="product-footer">
                             <p class="product-price">
                                 <i class="fas fa-tag"></i> 
-                                ${{ '{:,.0f}'.format(producto.precio) }}
+                                ${{ '{:,.0f}'.format(producto.precio) }} COP
                             </p>
                             <button class="btn-add-cart">
                                 <i class="fas fa-shopping-cart"></i> 
