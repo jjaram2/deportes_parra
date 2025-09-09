@@ -1,0 +1,48 @@
+<!-- checkout.html - Confirmación de pago -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmar Pago - Tienda Deportiva</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Tienda Deportiva</h1>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/categorias">Categorías</a>
+            <a href="/carrito">Carrito</a>
+        </nav>
+    </header>
+    <main>
+        <h2 style="text-align:center;font-size:2.2rem;color:#3498db;margin:2rem 0 1.5rem 0;letter-spacing:1px;">Confirmar pago</h2>
+        <div style="max-width:700px;margin:0 auto;background:#fff;padding:2rem 2.5rem;border-radius:14px;box-shadow:0 4px 18px #0002;">
+            <h3>Resumen de tu compra</h3>
+            <ul style="list-style:none;padding:0;">
+                {% for item in carrito %}
+                <li style="margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center;">
+                    <span>{{ item.nombre }} x{{ item.cantidad }}</span>
+                    <span style="color:#3498db;font-weight:600;">${{ '{:,.0f}'.format(item.precio * item.cantidad) }} COP</span>
+                </li>
+                {% endfor %}
+            </ul>
+            <div style="text-align:right;font-size:1.2rem;font-weight:700;margin-top:1.5rem;">
+                Total a pagar: <span style="color:#2ecc71;">${{ '{:,.0f}'.format(total) }} COP</span>
+            </div>
+            <form method="post" action="{{ url_for('store.procesar_pago') }}">
+                <button type="submit" style="margin-top:2rem;background:#2ecc71;color:#fff;padding:14px 36px;border:none;border-radius:8px;font-weight:700;font-size:1.1rem;cursor:pointer;">Confirmar y pagar</button>
+            </form>
+            <div style="margin-top:1.5rem;text-align:center;">
+                <a href="/carrito" style="color:#3498db;text-decoration:underline;">Volver al carrito</a>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <a href="/faq">Preguntas frecuentes</a> |
+        <a href="/devoluciones">Devoluciones</a> |
+        <a href="/contacto">Contacto</a>
+        <p>&copy; 2025 Tienda Deportiva</p>
+    </footer>
+</body>
+</html>

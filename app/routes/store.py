@@ -1,10 +1,12 @@
 
+
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 ## from app import db  # No se usa
 # from app.models.products import Product  # Asume que tienes un modelo Product
 
 bp = Blueprint('store', __name__)
 
+@bp.route('/carrito/actualizar', methods=['POST'], endpoint='actualizar_carrito')
 @bp.route('/carrito/actualizar', methods=['POST'], endpoint='actualizar_carrito')
 def store_actualizar_carrito():
     cart = session.get('carrito', [])
@@ -25,6 +27,11 @@ def store_actualizar_carrito():
     flash('Cantidades actualizadas', 'success')
     return redirect(url_for('store.carrito'))
 
+@bp.route('/procesar_pago', methods=['POST'])
+def procesar_pago():
+    session['carrito'] = []
+    flash('¡Pago realizado con éxito! Gracias por tu compra.', 'success')
+    return redirect(url_for('store.home'))
 @bp.route('/carrito/vaciar', endpoint='vaciar_carrito')
 def store_vaciar_carrito():
     session['carrito'] = []
@@ -34,13 +41,11 @@ def store_vaciar_carrito():
 @bp.route('/checkout', endpoint='checkout')
 def store_checkout():
     cart = session.get('carrito', [])
+    total = sum(item['precio'] * item['cantidad'] for item in cart) if cart else 0
     if not cart:
         flash('El carrito está vacío', 'warning')
         return redirect(url_for('store.carrito'))
-    # Aquí iría la lógica de pago real
-    flash('¡Gracias por tu compra! (Simulación)', 'success')
-    session['carrito'] = []
-    return redirect(url_for('store.carrito'))
+    return render_template('checkout.html', carrito=cart, total=total)
 
 @bp.route('/')
 @bp.route('/home')
