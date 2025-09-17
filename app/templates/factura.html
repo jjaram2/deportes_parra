@@ -1,0 +1,137 @@
+<!-- factura.html - Factura de compra -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Factura - Tienda Deportiva</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Tienda Deportiva</h1>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/categorias">Categorías</a>
+            <a href="/carrito">Carrito</a>
+        </nav>
+    </header>
+    <main>
+        <h2 style="text-align:center;font-size:2.2rem;color:#3498db;margin:2rem 0 1.5rem 0;letter-spacing:1px;">Factura de compra</h2>
+        <div style="max-width:700px;margin:0 auto;background:#fff;padding:2rem 2.5rem;border-radius:14px;box-shadow:0 4px 18px #0002;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;">
+                <div>
+                    <div style="font-size:1.1rem;color:#888;">Lugar de emisión:</div>
+                    <div style="font-weight:700;">{{ lugar }}</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:1.1rem;color:#888;">Fecha:</div>
+                    <div style="font-weight:700;">{{ fecha }}</div>
+                </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;">
+                <div>
+                    <div style="font-size:1.1rem;color:#888;">Cliente:</div>
+                    <div style="font-weight:700;">{{ cliente }}</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:1.1rem;color:#888;">Factura N°:</div>
+                    <div style="font-weight:700;">{{ numero }}</div>
+                </div>
+            </div>
+            <h3>Resumen de tu compra</h3>
+            <ul style="list-style:none;padding:0;">
+                {% for item in carrito %}
+                <li style="margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center;">
+                    <span>{{ item.nombre }} x{{ item.cantidad }}</span>
+                    <span style="color:#3498db;font-weight:600;">${{ '{:,.0f}'.format(item.precio * item.cantidad) }} COP</span>
+                </li>
+                {% endfor %}
+            </ul>
+            <div style="text-align:right;font-size:1.2rem;font-weight:700;margin-top:1.5rem;">
+                Total pagado: <span style="color:#2ecc71;">${{ '{:,.0f}'.format(total) }} COP</span>
+            </div>
+            <div style="margin-top:2.5rem;text-align:center;">
+                <a href="/" style="color:#3498db;text-decoration:underline;font-weight:600;">Volver al inicio</a>
+                <button id="ver-pdf" style="margin-left:2rem;background:#3498db;color:#fff;padding:10px 24px;border:none;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;">Ver factura en PDF</button>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const btn = document.getElementById('ver-pdf');
+      if (!btn) return;
+      btn.addEventListener('click', function() {
+        const { jsPDF } = window.jspdf;
+        // Extraer datos robustamente
+        function getTextByLabel(label) {
+          const divs = Array.from(document.querySelectorAll('div'));
+          for (let i = 0; i < divs.length; i++) {
+            if (divs[i].textContent.trim() === label && divs[i+1]) {
+              return divs[i+1].textContent.trim();
+            }
+          }
+          return '';
+        }
+        const lugar = getTextByLabel('Lugar de emisión:');
+        const fecha = getTextByLabel('Fecha:');
+        const cliente = getTextByLabel('Cliente:');
+        const numero = getTextByLabel('Factura N°:');
+        // Productos
+        const rows = Array.from(document.querySelectorAll('ul[style] > li')).map(li => {
+          const spans = li.querySelectorAll('span');
+          if (spans.length < 2) return null;
+          const nombreCantidad = spans[0].textContent.trim();
+          const match = nombreCantidad.match(/(.+) x(\\d+)/);
+          const nombre = match ? match[1].trim() : '';
+          const cantidad = match ? parseInt(match[2]) : 1;
+          const valorTotal = parseInt(spans[1].textContent.replace(/[^\d]/g, ''));
+          return { nombre, cantidad, valorTotal };
+        }).filter(Boolean);
+        rows.forEach(row => {
+          row.precioUnitario = row.cantidad ? Math.round(row.valorTotal / row.cantidad) : row.valorTotal;
+        });
+        // Calcular total de la factura (suma de subtotales)
+        const totalFactura = rows.reduce((acc, row) => acc + row.valorTotal, 0);
+        // Crear PDF
+        const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
+        let y = 40;
+        doc.setFontSize(18);
+        doc.text('Factura de compra', 40, y);
+        y += 30;
+        doc.setFontSize(12);
+        doc.text(`Lugar de emisión: ${lugar}`, 40, y);
+        doc.text(`Fecha: ${fecha}`, 320, y);
+        y += 20;
+        doc.text(`Cliente: ${cliente}`, 40, y);
+        doc.text(`Factura N°: ${numero}`, 320, y);
+        y += 30;
+        // Tabla de productos
+        const tableRows = rows.map(row => [row.nombre, row.cantidad, `$${Number(row.precioUnitario).toLocaleString()} COP`, `$${Number(row.valorTotal).toLocaleString()} COP`]);
+        doc.autoTable({
+          head: [['Producto', 'Cantidad', 'Precio unitario', 'Subtotal']],
+          body: tableRows,
+          startY: y,
+          theme: 'grid',
+          headStyles: { fillColor: [52, 152, 219] },
+          styles: { fontSize: 11 }
+        });
+        y = doc.lastAutoTable.finalY + 20;
+        doc.setFontSize(14);
+        doc.text(`Valor total de la factura: $${Number(totalFactura).toLocaleString()} COP`, 40, y);
+        // Abrir el PDF en una nueva pestaña
+        const pdfBlob = doc.output('blob');
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        window.open(pdfUrl, '_blank');
+      });
+    });
+    </script>
+    <footer>
+        <a href="/faq">Preguntas frecuentes</a> |
+        <a href="/devoluciones">Devoluciones</a> |
+        <a href="/contacto">Contacto</a>
+        <p>&copy; 2025 Tienda Deportiva</p>
+    </footer>
+</body>
+</html>

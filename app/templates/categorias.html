@@ -49,7 +49,7 @@
                         background: linear-gradient(135deg, rgba(120, 144, 156, 0.9) 0%, rgba(84, 110, 122, 0.9) 100%);
                     {% endif %}
                 ">
-                    <img src="{% if cat.nombre == 'Fútbol' %}/static/img/categorias/futbol.jpg{% elif cat.nombre == 'Baloncesto' %}/static/img/categorias/baloncesto.jpg{% elif cat.nombre == 'Tenis' %}/static/img/categorias/tenis.jpg{% elif cat.nombre == 'Natación' %}/static/img/categorias/natacion.jpg{% elif cat.nombre == 'Ciclismo' %}/static/img/categorias/ciclismo.jpg{% elif cat.nombre == 'Camping' %}/static/img/categorias/camping.jpg{% elif cat.nombre == 'Fitness' %}/static/img/categorias/fitness.jpg{% else %}/static/img/categorias/accesorios.jpg{% endif %}" alt="{{ cat.nombre }}" class="category-image">
+                    <img src="{{ cat.imagen }}" alt="{{ cat.nombre }}" class="category-image" loading="lazy" onerror="this.onerror=null;this.src='/static/img/categorias/accesorios.jpg';">
                     <div class="category-content">
                         <h3 class="category-title">
                             {% if cat.nombre == 'Fútbol' %}
@@ -71,6 +71,7 @@
                             {% endif %}
                             {{ cat.nombre }}
                         </h3>
+                        <p class="category-description" style="margin:0.5rem 0 0 0;font-size:1rem;color:#f5f5f5;">{{ cat.descripcion }}</p>
                     </div>
                 </div>
             </a>

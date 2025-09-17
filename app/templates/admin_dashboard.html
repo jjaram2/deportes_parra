@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Panel de Administrador</title>
     <link rel="stylesheet" href="/static/styles.css">
-</head>
+                        <!-- Eliminado bloque fuera de contexto que causaba error de variable indefinida -->
 <body>
     <header>
         <h1>Panel de Administrador</h1>
@@ -16,17 +16,58 @@
             <a href="/logout" style="color:#d32f2f;font-weight:bold;">Cerrar sesión</a>
         </nav>
     </header>
-    <main style="max-width:600px;margin:2rem auto;">
+    <main style="max-width:800px;margin:2rem auto;">
+        <hr>
+        <h2>Usuarios registrados</h2>
+        <table style="width:100%;border-collapse:collapse;margin-bottom:2rem;">
+            <thead>
+                <tr style="background:#eee;">
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.idUser }}</td>
+                    <td>{{ user.nameUser }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+                        <form method="post" action="/admin/bloquear/{{ user.idUser }}" style="display:inline;">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas bloquear este usuario?');">Bloquear</button>
+                        </form>
+                        <form method="post" action="/admin/cambiar_rol/{{ user.idUser }}" style="display:inline;margin-left:5px;">
+                            <select name="nuevo_rol" style="font-size:0.9em;">
+                                <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+                                <option value="vendedor" {% if user.role == 'vendedor' %}selected{% endif %}>Vendedor</option>
+                                <option value="usuario" {% if user.role == 'usuario' %}selected{% endif %}>Usuario</option>
+                                <option value="proveedor" {% if user.role == 'proveedor' %}selected{% endif %}>Proveedor</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary" style="font-size:0.9em;">Cambiar rol</button>
+                        </form>
+                        <form method="post" action="/admin/eliminar_usuario/{{ user.idUser }}" style="display:inline;margin-left:5px;">
+                            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="4" style="text-align:center;">No hay usuarios registrados.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
         <h2>Agregar nuevo producto</h2>
-        <form method="post" action="/admin/agregar_producto">
+        <form method="post" action="/admin/agregar_producto" enctype="multipart/form-data">
             <label>Nombre:</label>
             <input type="text" name="nombre" required style="width:100%;margin-bottom:10px;">
             <label>Descripción:</label>
             <textarea name="descripcion" required style="width:100%;margin-bottom:10px;"></textarea>
             <label>Precio (COP):</label>
             <input type="number" name="precio" min="0" required style="width:100%;margin-bottom:10px;">
-            <label>Imagen (URL):</label>
-            <input type="text" name="imagen_url" required style="width:100%;margin-bottom:10px;">
+            <label>Imagen (archivo o URL):</label>
+            <input type="file" name="imagen_file" accept="image/*" style="width:100%;margin-bottom:10px;">
+            <input type="text" name="imagen_url" placeholder="O pega una URL de imagen" style="width:100%;margin-bottom:10px;">
             <label>Categoría:</label>
             <select name="categoria" required style="width:100%;margin-bottom:20px;">
                 <option value="futbol">Fútbol</option>
@@ -40,6 +81,78 @@
             </select>
             <button type="submit" class="btn btn-primary" style="width:100%;">Agregar producto</button>
         </form>
+
+        <hr>
+        <h2>Productos existentes</h2>
+        <table style="width:100%;border-collapse:collapse;">
+            <thead>
+                <tr style="background:#eee;">
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Categoría</th>
+                    <th>Imagen</th>
+                    <th>Exclusivo</th>
+                    <th>Galería</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.id }}</td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.descripcion }}</td>
+                    <td>${{ producto.precio }}</td>
+                    <td>{{ producto.categoria }}</td>
+                    <td><img src="{{ producto.imagen_url }}" alt="img" style="max-width:60px;max-height:60px;"></td>
+                    <td>
+                        <form method="post" action="/admin/toggle_exclusivo/{{ producto.id }}" style="display:inline;">
+                            <button type="submit" class="btn" style="background:{{ 'green' if producto.exclusivo else '#eee' }};color:{{ 'white' if producto.exclusivo else 'black' }};">
+                                {{ 'Sí' if producto.exclusivo else 'No' }}
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="/admin/toggle_galeria/{{ producto.id }}" style="display:inline;">
+                            <button type="submit" class="btn" style="background:{{ 'blue' if producto.galeria else '#eee' }};color:{{ 'white' if producto.galeria else 'black' }};">
+                                {{ 'Sí' if producto.galeria else 'No' }}
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <a href="/admin/editar_producto/{{ producto.id }}" class="btn btn-warning" style="margin-right:5px;">Editar</a>
+                        <form method="post" action="/admin/eliminar_producto/{{ producto.id }}" style="display:inline;">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas eliminar este producto?');">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="9" style="text-align:center;">No hay productos registrados.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <hr>
+        <h2>Productos Exclusivos</h2>
+        <ul>
+            {% for producto in productos if producto.exclusivo %}
+            <li>{{ producto.nombre }} (ID: {{ producto.id }}) <form method="post" action="/admin/toggle_exclusivo/{{ producto.id }}" style="display:inline;"><button type="submit" class="btn btn-danger" style="font-size:0.8em;">Quitar</button></form></li>
+            {% else %}
+            <li style="color:#888;">No hay productos exclusivos.</li>
+            {% endfor %}
+        </ul>
+
+        <hr>
+        <h2>Galería Deportiva</h2>
+        <ul>
+            {% for producto in productos if producto.galeria %}
+            <li>{{ producto.nombre }} (ID: {{ producto.id }}) <form method="post" action="/admin/toggle_galeria/{{ producto.id }}" style="display:inline;"><button type="submit" class="btn btn-danger" style="font-size:0.8em;">Quitar</button></form></li>
+            {% else %}
+            <li style="color:#888;">No hay productos en galería deportiva.</li>
+            {% endfor %}
+        </ul>
     </main>
 </body>
 </html>

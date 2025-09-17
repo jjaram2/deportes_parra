@@ -21,7 +21,7 @@ for nombre, color in categorias:
     draw = ImageDraw.Draw(img)
     try:
         font = ImageFont.truetype("arial.ttf", 40)
-    except:
+    except OSError:
         font = ImageFont.load_default()
     text = nombre.capitalize()
     bbox = draw.textbbox((0, 0), text, font=font)

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Producto</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Editar Producto</h1>
+        <nav>
+            <a href="/admin">Panel Admin</a>
+            <a href="/logout" style="color:#d32f2f;font-weight:bold;">Cerrar sesión</a>
+        </nav>
+    </header>
+    <main style="max-width:600px;margin:2rem auto;">
+    <form method="post" enctype="multipart/form-data">
+            <label>Nombre:</label>
+            <input type="text" name="nombre" value="{{ producto.nombre }}" required style="width:100%;margin-bottom:10px;">
+            <label>Descripción:</label>
+            <textarea name="descripcion" required style="width:100%;margin-bottom:10px;">{{ producto.descripcion }}</textarea>
+            <label>Precio (COP):</label>
+            <input type="number" name="precio" min="0" value="{{ producto.precio }}" required style="width:100%;margin-bottom:10px;">
+            <label>Imagen actual:</label>
+            {% if producto.imagen_url %}
+                <img src="{{ producto.imagen_url }}" alt="img" style="max-width:100px;max-height:100px;display:block;margin-bottom:10px;">
+                <label><input type="checkbox" name="eliminar_imagen"> Eliminar imagen</label>
+            {% else %}
+                <span style="color:#888;">Sin imagen</span>
+            {% endif %}
+            <label>Subir nueva imagen:</label>
+            <input type="file" name="imagen_file" accept="image/*" style="width:100%;margin-bottom:10px;">
+            <label>O cambiar URL de imagen:</label>
+            <input type="text" name="imagen_url" value="{{ producto.imagen_url }}" style="width:100%;margin-bottom:10px;">
+            <label>Categoría:</label>
+            <select name="categoria" required style="width:100%;margin-bottom:20px;">
+                <option value="futbol" {% if producto.categoria == 'futbol' %}selected{% endif %}>Fútbol</option>
+                <option value="baloncesto" {% if producto.categoria == 'baloncesto' %}selected{% endif %}>Baloncesto</option>
+                <option value="tenis" {% if producto.categoria == 'tenis' %}selected{% endif %}>Tenis</option>
+                <option value="natacion" {% if producto.categoria == 'natacion' %}selected{% endif %}>Natación</option>
+                <option value="ciclismo" {% if producto.categoria == 'ciclismo' %}selected{% endif %}>Ciclismo</option>
+                <option value="camping" {% if producto.categoria == 'camping' %}selected{% endif %}>Camping</option>
+                <option value="fitness" {% if producto.categoria == 'fitness' %}selected{% endif %}>Fitness</option>
+                <option value="accesorios" {% if producto.categoria == 'accesorios' %}selected{% endif %}>Accesorios</option>
+            </select>
+            <button type="submit" class="btn btn-primary" style="width:100%;">Guardar cambios</button>
+        </form>
+    </main>
+</body>
+</html>

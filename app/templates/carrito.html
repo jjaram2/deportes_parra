@@ -32,7 +32,7 @@
                   {% if item.imagen_url %}
                     <img src="{{ item.imagen_url }}" alt="{{ item.nombre }}" style="width:90px;height:90px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px #0001;">
                   {% else %}
-                    <img src="/static/img/productos/default.jpg" alt="Sin imagen" style="width:90px;height:90px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px #0001;">
+                    <span style="color:#888;font-size:0.9em;">Sin imagen</span>
                   {% endif %}
                 </div>
                 <div style="flex:1;min-width:180px;">

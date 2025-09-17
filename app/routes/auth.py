@@ -35,7 +35,11 @@ def login():
 @login_required
 def dashboard():    
     if current_user.role == 'admin':
-        return render_template('admin_dashboard.html')
+        from app.models.products import Product
+        from app.models.users import Users
+        users = Users.query.all()
+        productos = Product.query.all()
+        return render_template('admin_dashboard.html', users=users, productos=productos)
     elif current_user.role == 'vendedor':
         return render_template('vendedor_dashboard.html')
     elif current_user.role == 'proveedor':

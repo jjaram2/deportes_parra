@@ -1,25 +1,29 @@
 from app import create_app, db
-import pytest
+try:
+    import pytest
+except ImportError:
+    pytest = None
 
 @pytest.fixture
-def app():
+def app_instance():
     app = create_app()
     with app.app_context():
-        db.create_all()  # Create tables within the context
+        db.create_all()
         yield app
-        db.session.remove()  # Cleanup session objects
+        db.session.remove()
         db.drop_all()
   
 
+@pytest.fixture
 @pytest.fixture
 def client(app):
     return app.test_client()
 
 @pytest.fixture
-def user(app):
+@pytest.fixture
+def user_fixture():
     from app.models.users import Users
     user = Users(nameUser="test_user", passwordUser="test_password")
     db.session.add(user)
-    db.session.commit()  # Commit changes within the context
-    yield user    
-  # Cleanup changes within the context
+    db.session.commit()
+    yield user
