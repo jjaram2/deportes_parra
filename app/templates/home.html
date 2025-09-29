@@ -1,55 +1,84 @@
-<!-- home.html - Inspirada en Nike Colombia -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sport Store - Tu tienda deportiva</title>
+    <title>Sport Store Pro - Barbosa, Santander</title>
     <link rel="stylesheet" href="/static/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #2ecc71;
-            --text-color: #2c3e50;
-            --background-color: #f8f9fa;
-            --white: #ffffff;
-        }
-        
-        body {
-            background-color: var(--background-color);
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-color);
+        * {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            box-sizing: border-box;
         }
-        
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
         header {
             background: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 1.2rem 5%;
             position: sticky;
             top: 0;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            animation: slideDown 0.5s ease-out;
         }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-color);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary-color);
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            transition: transform 0.3s ease;
         }
-        
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
         .logo i {
-            color: var(--primary-color);
-            font-size: 1.75rem;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         nav {
@@ -59,1137 +88,658 @@
         }
 
         nav a {
-            color: var(--text-color);
-            font-weight: 500;
-            font-size: 0.9rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
             text-decoration: none;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         nav a:hover {
             color: var(--primary-color);
+            transform: translateY(-2px);
         }
 
-        nav a i {
-            font-size: 1.1rem;
-        }
         .nav-end {
             display: flex;
             gap: 1.5rem;
             align-items: center;
         }
-        
+
         .nav-end a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
         }
-        
+
         .nav-end a:hover {
             color: var(--primary-color);
+            transform: scale(1.2) rotate(5deg);
         }
-        
-        .cart-icon, .login-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 2rem;
-            height: 2rem;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: var(--white);
-            color: var(--primary-color);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 1rem;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            background: var(--primary-color);
-            color: var(--white);
-        }
-        .banner-exclusivo {
-            background: linear-gradient(120deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            min-height: 500px;
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.95) 0%, rgba(16, 185, 129, 0.95) 100%),
+                        url('/placeholder.svg?height=600&width=1920') center/cover;
+            min-height: 85vh;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--white);
-            padding: 4rem 2rem;
-            margin: 0 auto;
+            text-align: center;
+            padding: 2rem;
             position: relative;
             overflow: hidden;
         }
 
-        .banner-content {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
         }
 
-        .banner-content h2 {
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content h1 {
             font-size: 4rem;
-            font-weight: 700;
+            font-weight: 900;
             margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            line-height: 1.2;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out 0.2s both;
         }
 
-        .banner-content p {
-            font-size: 1.1rem;
+        .hero-content p {
+            font-size: 1.4rem;
             margin-bottom: 2.5rem;
-            line-height: 1.6;
-            opacity: 0.9;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.4s both;
         }
+
+        .location-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .location-badge i {
+            font-size: 1.2rem;
+        }
+
         .cta-button {
             display: inline-block;
-            padding: 1rem 2rem;
-            background: white;
-            color: #3498db;
+            padding: 1.2rem 3rem;
+            background: var(--white);
+            color: var(--primary-color);
             text-decoration: none;
             border-radius: 50px;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease-out 0.8s both;
         }
+
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .categorias-section {
-            padding: 4rem 2rem;
-            background: var(--white);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            background: var(--accent-color);
+            color: var(--white);
         }
 
-        .categorias-exclusivo {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
+        /* Section Styles */
+        .section {
+            padding: 5rem 5%;
+            animation: fadeIn 1s ease-out;
         }
 
-        .categoria-card {
-            background: var(--white);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-decoration: none;
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .categoria-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .categoria-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .categoria-card:hover img {
-            transform: scale(1.05);
-        }
-
-        .categoria-info {
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .categoria-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
-            color: var(--text-color);
-        }
         .section-title {
             text-align: center;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2rem;
-            color: #2c3e50;
-            margin: 3rem 0;
-            font-weight: 700;
-        }
-        .categoria-link {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-        .categoria-link:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-        }
-        .productos-exclusivo {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .producto-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .producto-card:hover {
-            box-shadow: 0 8px 32px #ffd700;
-            transform: scale(1.05);
-        }
-        .producto-card img {
-            width: 190px;
-            height: 190px;
-            object-fit: cover;
-            margin-bottom: 14px;
-            border-radius: 12px;
-            border: 2px solid #ffd700;
-        }
-        .producto-card h4 {
-            font-family: 'Montserrat', Arial Black, Arial, sans-serif;
-            color: #ffd700;
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-        }
-        .producto-card p {
-            color: #00fff7;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        .producto-card a {
-            color: #ffd700;
-            font-weight: 700;
-            text-decoration: underline;
-            font-size: 1rem;
-        }
-        footer {
-            background: #2c3e50;
-            color: #ecf0f1;
-            text-align: center;
-            padding: 3rem 1rem;
-            margin-top: 4rem;
-        }
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            text-align: left;
-        }
-        .footer-section h4 {
-            color: #3498db;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-        footer a {
-            color: #ecf0f1;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        footer a:hover {
-            color: #3498db;
-        }
-        .footer-bottom {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #34495e;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #95a5a6;
-        }
-        .social-links {
-            margin-top: 1rem;
-        }
-        .social-links a {
-            font-size: 1.5rem;
-            margin: 0 0.5rem;
-            color: #3498db;
-        }
-        .social-links a:hover {
-            color: #2980b9;
-        }
-        .banner {
-            background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1920&q=60') no-repeat center center/cover;
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            position: relative;
-        }
-
-        .banner::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
-
-        .banner-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 0 1rem;
-        }
-
-        .banner-content h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .banner-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            line-height: 1.4;
-        }
-
-        .categorias {
-            padding: 4rem 2rem;
-            background: var(--white);
-        }
-
-        .categorias h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            color: #2c3e50;
-        }
-
-        .categorias-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .categoria-card {
-            background: var(--white);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-decoration: none;
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
-        }
-
-        .categoria-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .categoria-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .categoria-card:hover img {
-            transform: scale(1.05);
-        }
-
-        .categoria-info {
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .categoria-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
-            color: var(--text-color);
-        }
-
-        .categoria-card p {
-            font-size: 0.9rem;
-            margin: 0.5rem 0 1rem;
-            color: #7f8c8d;
-        }
-        .productos-exclusivo {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .producto-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .producto-card:hover {
-            box-shadow: 0 8px 32px #ffd700;
-            transform: scale(1.05);
-        }
-        .producto-card img {
-            width: 190px;
-            height: 190px;
-            object-fit: cover;
-            margin-bottom: 14px;
-            border-radius: 12px;
-            border: 2px solid #ffd700;
-        }
-        .producto-card h4 {
-            font-family: 'Montserrat', Arial Black, Arial, sans-serif;
-            color: #ffd700;
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-        }
-        .producto-card p {
-            color: #00fff7;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        .producto-card a {
-            color: #ffd700;
-            font-weight: 700;
-            text-decoration: underline;
-            font-size: 1rem;
-        }
-        footer {
-            background: #2c3e50;
-            color: #ecf0f1;
-            text-align: center;
-            padding: 3rem 1rem;
-            margin-top: 4rem;
-        }
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            text-align: left;
-        }
-        .footer-section h4 {
-            color: #3498db;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-        footer a {
-            color: #ecf0f1;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        footer a:hover {
-            color: #3498db;
-        }
-        .footer-bottom {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #34495e;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #95a5a6;
-        }
-        .social-links {
-            margin-top: 1rem;
-        }
-        .social-links a {
-            font-size: 1.5rem;
-            margin: 0 0.5rem;
-            color: #3498db;
-        }
-        .social-links a:hover {
-            color: #2980b9;
-        }
-        .banner {
-            background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1920&q=60') no-repeat center center/cover;
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            position: relative;
-        }
-
-        .banner::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
-
-        .banner-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 0 1rem;
-        }
-
-        .banner-content h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .banner-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            line-height: 1.4;
-        }
-
-        .categorias {
-            padding: 4rem 2rem;
-            background: var(--white);
-        }
-
-        .categorias h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            color: #2c3e50;
-        }
-
-        .categorias-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .categoria-card {
-            background: var(--white);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-decoration: none;
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
-        }
-
-        .categoria-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .categoria-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .categoria-card:hover img {
-            transform: scale(1.05);
-        }
-
-        .categoria-info {
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .categoria-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
-            color: var(--text-color);
-        }
-
-        .categoria-card p {
-            font-size: 0.9rem;
-            margin: 0.5rem 0 1rem;
-            color: #7f8c8d;
-        }
-        .productos-exclusivo {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .producto-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .producto-card:hover {
-            box-shadow: 0 8px 32px #ffd700;
-            transform: scale(1.05);
-        }
-        .producto-card img {
-            width: 190px;
-            height: 190px;
-            object-fit: cover;
-            margin-bottom: 14px;
-            border-radius: 12px;
-            border: 2px solid #ffd700;
-        }
-        .producto-card h4 {
-            font-family: 'Montserrat', Arial Black, Arial, sans-serif;
-            color: #ffd700;
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-        }
-        .producto-card p {
-            color: #00fff7;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        .producto-card a {
-            color: #ffd700;
-            font-weight: 700;
-            text-decoration: underline;
-            font-size: 1rem;
-        }
-        footer {
-            background: #2c3e50;
-            color: #ecf0f1;
-            text-align: center;
-            padding: 3rem 1rem;
-            margin-top: 4rem;
-        }
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            text-align: left;
-        }
-        .footer-section h4 {
-            color: #3498db;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-        footer a {
-            color: #ecf0f1;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        footer a:hover {
-            color: #3498db;
-        }
-        .footer-bottom {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #34495e;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #95a5a6;
-        }
-        .social-links {
-            margin-top: 1rem;
-        }
-        .social-links a {
-            font-size: 1.5rem;
-            margin: 0 0.5rem;
-            color: #3498db;
-        }
-        .social-links a:hover {
-            color: #2980b9;
-        }
-        .banner {
-            background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1920&q=60') no-repeat center center/cover;
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            position: relative;
-        }
-
-        .banner::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
-
-        .banner-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 0 1rem;
-        }
-
-        .banner-content h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .banner-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            line-height: 1.4;
-        }
-
-        .categorias {
-            padding: 4rem 2rem;
-            background: var(--white);
-        }
-
-        .categorias h2 {
-            text-align: center;
-            font-size: 2.7rem;
-            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
             font-weight: 900;
-            color: #222;
-            margin-bottom: 2.5rem;
-            letter-spacing: 1px;
+            color: var(--text-dark);
+            margin-bottom: 3rem;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
         }
 
-        .categorias-grid {
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        /* Categories Grid */
+        .categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2.5rem;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        .categoria-card {
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 6px 32px rgba(44,62,80,0.10);
+        .category-card {
+            background: var(--white);
+            border-radius: 20px;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.2s;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
         }
 
-        .categoria-card:hover {
-            transform: translateY(-5px);
+        .category-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-card:nth-child(2) { animation-delay: 0.2s; }
+        .category-card:nth-child(3) { animation-delay: 0.3s; }
+        .category-card:nth-child(4) { animation-delay: 0.4s; }
+        .category-card:nth-child(5) { animation-delay: 0.5s; }
+        .category-card:nth-child(6) { animation-delay: 0.6s; }
+        .category-card:nth-child(7) { animation-delay: 0.7s; }
+        .category-card:nth-child(8) { animation-delay: 0.8s; }
+
+        .category-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.2);
         }
 
-        .categoria-card img {
+        .category-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+        }
+
+        .category-card img {
             width: 100%;
-            height: 180px;
+            height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.5s ease;
         }
 
-        .categoria-card:hover img {
-            transform: scale(1.05);
+        .category-card:hover img {
+            transform: scale(1.15) rotate(2deg);
         }
 
-        .categoria-info {
-            padding: 2rem 1.2rem 1.5rem 1.2rem;
+        .category-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover .category-overlay {
+            opacity: 1;
+        }
+
+        .category-info {
+            padding: 1.8rem;
             text-align: center;
         }
 
-        .categoria-card h3 {
-            font-size: 1.35rem;
-            font-family: 'Montserrat', sans-serif;
+        .category-card h3 {
+            font-size: 1.5rem;
             font-weight: 800;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
         }
 
-        .categoria-card p {
-            color: #555;
-            font-size: 1rem;
+        .category-card h3 i {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+        }
+
+        .category-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
             margin-bottom: 1.2rem;
         }
-        .categoria-link {
-            display: inline-block;
-            padding: 0.7rem 1.7rem;
-            background: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 700;
-            transition: background 0.2s, transform 0.2s;
-            letter-spacing: 0.5px;
-        }
-        .categoria-link:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-        }
-        .productos-exclusivo {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .producto-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
+
+        .category-link {
+            display: inline-flex;
             align-items: center;
-        }
-        .producto-card:hover {
-            box-shadow: 0 8px 32px #ffd700;
-            transform: scale(1.05);
-        }
-        .producto-card img {
-            width: 190px;
-            height: 190px;
-            object-fit: cover;
-            margin-bottom: 14px;
-            border-radius: 12px;
-            border: 2px solid #ffd700;
-        }
-        .producto-card h4 {
-            font-family: 'Montserrat', Arial Black, Arial, sans-serif;
-            color: #ffd700;
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-        }
-        .producto-card p {
-            color: #00fff7;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        .producto-card a {
-            color: #ffd700;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
             font-weight: 700;
-            text-decoration: underline;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
+
+        .category-link:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Footer */
         footer {
-            background: #2c3e50;
-            color: #ecf0f1;
-            text-align: center;
-            padding: 3rem 1rem;
-            margin-top: 4rem;
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: #e5e7eb;
+            padding: 4rem 5% 2rem;
+            margin-top: 5rem;
         }
+
         .footer-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            text-align: left;
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
+
         .footer-section h4 {
-            color: #3498db;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
+            color: var(--white);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
         }
+
+        .footer-section h4 i {
+            color: var(--secondary-color);
+        }
+
         .footer-section ul {
             list-style: none;
-            padding: 0;
         }
+
         .footer-section ul li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
-        footer a {
-            color: #ecf0f1;
+
+        .footer-section a {
+            color: #d1d5db;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        footer a:hover {
-            color: #3498db;
+
+        .footer-section a:hover {
+            color: var(--secondary-color);
+            transform: translateX(5px);
         }
-        .footer-bottom {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #34495e;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #95a5a6;
+
+        .footer-location {
+            background: rgba(16, 185, 129, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--secondary-color);
         }
+
+        .footer-location p {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .footer-location i {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
         .social-links {
-            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
+
         .social-links a {
-            font-size: 1.5rem;
-            margin: 0 0.5rem;
-            color: #3498db;
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
         }
+
         .social-links a:hover {
-            color: #2980b9;
+            background: var(--secondary-color);
+            transform: translateY(-5px) rotate(360deg);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #9ca3af;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav {
+                gap: 1rem;
+            }
+            
+            .section {
+                padding: 3rem 5%;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-            <a href="/" class="logo">
-                <i class="fas fa-running"></i>
-                <span>Sport Store</span>
+        <a href="/" class="logo">
+            <i class="fas fa-running"></i>
+            <span>Sport Store Pro</span>
+        </a>
+        <nav>
+            <a href="/categorias">
+                <i class="fas fa-th-large"></i>
+                Categorías
             </a>
-            <nav>
-                <a href="/categorias">
-                    <i class="fas fa-th-large"></i>
-                    Categorías
+            <a href="/promociones">
+                <i class="fas fa-tag"></i>
+                Promociones
+            </a>
+            <a href="/nuevos">
+                <i class="fas fa-star"></i>
+                Novedades
+            </a>
+        </nav>
+        <div class="nav-end">
+            <a href="/carrito" title="Carrito">
+                <i class="fas fa-shopping-cart"></i>
+            </a>
+            {% if session['user_id'] %}
+                <a href="/user_dashboard" title="Mi Cuenta">
+                    <i class="fas fa-user-circle"></i>
                 </a>
-                <a href="/promociones">
-                    <i class="fas fa-tag"></i>
-                    Promociones
+                <a href="/logout" title="Cerrar Sesión">
+                    <i class="fas fa-sign-out-alt"></i>
                 </a>
-                <a href="/nuevos">
-                    <i class="fas fa-star"></i>
-                    Novedades
+            {% else %}
+                <a href="/login" title="Iniciar Sesión">
+                    <i class="fas fa-sign-in-alt"></i>
                 </a>
-            </nav>
-            <div class="nav-end">
-                <a href="/carrito" title="Carrito">
-                    <i class="fas fa-shopping-cart"></i>
-                </a>
-                {% if session['user_id'] %}
-                    <a href="/user_dashboard" title="Mi Cuenta">
-                        <i class="fas fa-user-circle"></i>
-                    </a>
-                    <a href="/logout" title="Cerrar Sesión">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </a>
-                {% else %}
-                    <a href="/login" title="Iniciar Sesión">
-                        <i class="fas fa-sign-in-alt"></i>
-                    </a>
-                {% endif %}
-            </div>
-        </header>
+            {% endif %}
+        </div>
+    </header>
+
     <main>
-        <div class="banner">
-            <div class="banner-content">
+        <div class="hero-banner">
+            <div class="hero-content">
+                <div class="location-badge">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Barbosa, Santander</span>
+                </div>
                 <h1>Descubre tu potencial deportivo</h1>
                 <p>Equipamiento de alta calidad para todos los deportes</p>
-                <a href="/categorias" class="cta-button">Explorar ahora</a>
+                <a href="/categorias" class="cta-button">
+                    <i class="fas fa-arrow-right"></i> Explorar ahora
+                </a>
             </div>
         </div>
-        <section class="categorias">
+
+        <section class="section">
             <h2 class="section-title">Categorías Destacadas</h2>
-            <div class="categorias-grid">
-                <div class="categoria-card">
-                    <img src="/static/img/categorias/futbol.jpg" alt="Fútbol">
-                    <div class="categoria-info">
-                        <h3>Fútbol</h3>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-image-wrapper">
+                        <img src="/static/img/productos/futbol.jpg" alt="Fútbol">
+                    </div>
+                    <div class="category-info">
+                        <h3><i class="fas fa-futbol"></i> Fútbol</h3>
                         <p>Botines, balones, uniformes y accesorios para cancha y entrenamiento.</p>
-                        <a href="/categoria/futbol" class="categoria-link"><i class="fas fa-futbol"></i> Ver productos</a>
+                        <a href="/categoria/futbol" class="category-link">
+                            Ver productos <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="categoria-card">
-                    <img src="/static/img/categorias/baloncesto.jpg" alt="Baloncesto">
-                    <div class="categoria-info">
-                        <h3>Baloncesto</h3>
+
+                <div class="category-card">
+                    <div class="category-image-wrapper">
+                        <img src="/static/img/productos/basquet.jpg" alt="Baloncesto">
+                    </div>
+                    <div class="category-info">
+                        <h3><i class="fas fa-basketball-ball"></i> Baloncesto</h3>
                         <p>Balones, camisetas, shorts y zapatillas para la cancha.</p>
-                        <a href="/categoria/baloncesto" class="categoria-link"><i class="fas fa-basketball-ball"></i> Ver productos</a>
+                        <a href="/categoria/baloncesto" class="category-link">
+                            Ver productos <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="categoria-card">
-                    <img src="/static/img/categorias/tenis.jpg" alt="Tenis">
-                    <div class="categoria-info">
-                        <h3>Tenis</h3>
+
+                <div class="category-card">
+                    <div class="category-image-wrapper">
+                        <img src="/static/img/productos/tennis.jpg" alt="Tenis">
+                    </div>
+                    <div class="category-info">
+                        <h3><i class="fas fa-table-tennis"></i> Tenis</h3>
                         <p>Raquetas, pelotas, ropa y calzado para dominar la pista.</p>
-                        <a href="/categoria/tenis" class="categoria-link"><i class="fas fa-table-tennis"></i> Ver productos</a>
+                        <a href="/categoria/tenis" class="category-link">
+                            Ver productos <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="categoria-card">
-                    <img src="/static/img/categorias/natacion.jpg" alt="Natación">
-                    <div class="categoria-info">
-                        <h3>Natación</h3>
-                        <p>Gafas, trajes, gorros y accesorios para nadadores profesionales y aficionados.</p>
-                        <a href="/categoria/natacion" class="categoria-link"><i class="fas fa-swimming-pool"></i> Ver productos</a>
+
+                <div class="category-card">
+                    <div class="category-image-wrapper">
+                        <img src="/static/img/productos/natacion.jpg" alt="Natación">
+                    </div>
+                    <div class="category-info">
+                        <h3><i class="fas fa-swimming-pool"></i> Natación</h3>
+                        <p>Gafas, trajes, gorros y accesorios para nadadores profesionales.</p>
+                        <a href="/categoria/natacion" class="category-link">
+                            Ver productos <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="categoria-card">
-                    <img src="/static/img/categorias/ciclismo.jpg" alt="Ciclismo">
-                    <div class="categoria-info">
-                        <h3>Ciclismo</h3>
-                        <p>Bicicletas, cascos, guantes y uniformes para ciclistas de todos los niveles.</p>
-                        <a href="/categoria/ciclismo" class="categoria-link"><i class="fas fa-bicycle"></i> Ver productos</a>
+
+                <div class="category-card">
+                    <div class="category-image-wrapper">
+                        <img src="/static/img/productos/ciclismo.jpg" alt="Ciclismo">
+                    </div>
+                    <div class="category-info">
+                        <h3><i class="fas fa-bicycle"></i> Ciclismo</h3>
+                        <p>Bicicletas, cascos, guantes y uniformes para ciclistas.</p>
+                        <a href="/categoria/ciclismo" class="category-link">
+                            Ver productos <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="categoria-card">
-                    <img src="/static/img/categorias/camping.jpg" alt="Camping">
-                    <div class="categoria-info">
-                        <h3>Camping</h3>
-                        <p>Carpas, mochilas, linternas y kits para tus aventuras al aire libre.</p>
-                        <a href="/categoria/camping" class="categoria-link"><i class="fas fa-campground"></i> Ver productos</a>
+
+                <div class="category-card">
+                    <div class="category-image-wrapper">
+                        <img src="/static/img/productos/camping.jpg" alt="Camping">
+                    </div>
+                    <div class="category-info">
+                        <h3><i class="fas fa-campground"></i> Camping</h3>
+                        <p>Carpas, mochilas, linternas y kits para aventuras al aire libre.</p>
+                        <a href="/categoria/camping" class="category-link">
+                            Ver productos <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="categoria-card">
-                    <img src="/static/img/categorias/fitness.jpg" alt="Fitness">
-                    <div class="categoria-info">
-                        <h3>Fitness</h3>
+
+                <div class="category-card">
+                    <div class="category-image-wrapper">
+                        <img src="/static/img/productos/fitnes.jpg" alt="Fitness">
+                    </div>
+                    <div class="category-info">
+                        <h3><i class="fas fa-dumbbell"></i> Fitness</h3>
                         <p>Pesas, ropa deportiva, bandas y accesorios para tu entrenamiento.</p>
-                        <a href="/categoria/fitness" class="categoria-link"><i class="fas fa-dumbbell"></i> Ver productos</a>
+                        <a href="/categoria/fitness" class="category-link">
+                            Ver productos <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="categoria-card">
-                    <img src="/static/img/categorias/accesorios.jpg" alt="Accesorios">
-                    <div class="categoria-info">
-                        <h3>Accesorios</h3>
-                        <p>Botellas, bolsos, toallas y tecnología deportiva para complementar tu rutina.</p>
-                        <a href="/categoria/accesorios" class="categoria-link"><i class="fas fa-shopping-bag"></i> Ver productos</a>
+
+                <div class="category-card">
+                    <div class="category-image-wrapper">
+                        <img src="/static/img/productos/accesorio.jpg" alt="Accesorios">
                     </div>
-                </div>
-            </div>
-        </section>
-        <section class="categorias">
-            <h2 class="section-title">Galería Deportiva</h2>
-            <div class="categorias-grid">
-                <div class="categoria-card">
-                    <img src="/static/img/galeria/galeria_futbol.jpg" alt="Galería Fútbol">
-                    <div class="categoria-info">
-                        <h3>Fútbol en acción</h3>
-                        <p>Momentos destacados de partidos y entrenamientos.</p>
-                    </div>
-                </div>
-                <div class="categoria-card">
-                    <img src="/static/img/galeria/galeria_baloncesto.jpg" alt="Galería Baloncesto">
-                    <div class="categoria-info">
-                        <h3>Baloncesto vibrante</h3>
-                        <p>Jugadas y equipos en la cancha.</p>
-                    </div>
-                </div>
-                <div class="categoria-card">
-                    <img src="/static/img/galeria/galeria_tenis.jpg" alt="Galería Tenis">
-                    <div class="categoria-info">
-                        <h3>Tenis profesional</h3>
-                        <p>Grandes raquetazos y torneos.</p>
-                    </div>
-                </div>
-                <div class="categoria-card">
-                    <img src="/static/img/galeria/galeria_natacion.jpg" alt="Galería Natación">
-                    <div class="categoria-info">
-                        <h3>Natación de alto nivel</h3>
-                        <p>Competencias y entrenamientos acuáticos.</p>
+                    <div class="category-info">
+                        <h3><i class="fas fa-shopping-bag"></i> Accesorios</h3>
+                        <p>Botellas, bolsos, toallas y tecnología deportiva.</p>
+                        <a href="/categoria/accesorios" class="category-link">
+                            Ver productos <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="categorias">
+
+        {% if productos_exclusivos %}
+        <section class="section" style="background: var(--white);">
             <h2 class="section-title">Productos Exclusivos</h2>
-            <div class="categorias-grid">
-                <!-- Productos estáticos eliminados para evitar referencias a imágenes inexistentes -->
+            <div class="categories-grid">
+                {% for producto in productos_exclusivos %}
+                <div class="category-card">
+                    <div class="category-image-wrapper">
+                        <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}">
+                    </div>
+                    <div class="category-info">
+                        <h3>{{ producto.nombre }}</h3>
+                        <p>${{ '{:,.0f}'.format(producto.precio) }} COP</p>
+                        <a href="/producto/{{ producto.id }}" class="category-link">
+                            Ver detalle <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </section>
+        {% endif %}
     </main>
-            <footer>
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Acerca de Nosotros</h4>
-                    <ul>
-                        <li><a href="/nosotros">Quiénes Somos</a></li>
-                        <li><a href="/historia">Nuestra Historia</a></li>
-                        <li><a href="/trabaja-con-nosotros">Trabaja con Nosotros</a></li>
-                        <li><a href="/tiendas">Nuestras Tiendas</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Servicio al Cliente</h4>
-                    <ul>
-                        <li><a href="/contacto">Contacto</a></li>
-                        <li><a href="/preguntas-frecuentes">Preguntas Frecuentes</a></li>
-                        <li><a href="/devoluciones">Política de Devoluciones</a></li>
-                        <li><a href="/envios">Información de Envíos</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="/terminos">Términos y Condiciones</a></li>
-                        <li><a href="/privacidad">Política de Privacidad</a></li>
-                        <li><a href="/cookies">Política de Cookies</a></li>
-                    </ul>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4><i class="fas fa-store"></i> Acerca de Nosotros</h4>
+                <ul>
+                    <li><a href="/nosotros"><i class="fas fa-chevron-right"></i> Quiénes Somos</a></li>
+                    <li><a href="/historia"><i class="fas fa-chevron-right"></i> Nuestra Historia</a></li>
+                    <li><a href="/trabaja-con-nosotros"><i class="fas fa-chevron-right"></i> Trabaja con Nosotros</a></li>
+                    <li><a href="/tiendas"><i class="fas fa-chevron-right"></i> Nuestras Tiendas</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4><i class="fas fa-headset"></i> Servicio al Cliente</h4>
+                <ul>
+                    <li><a href="/contacto"><i class="fas fa-chevron-right"></i> Contacto</a></li>
+                    <li><a href="/preguntas-frecuentes"><i class="fas fa-chevron-right"></i> Preguntas Frecuentes</a></li>
+                    <li><a href="/devoluciones"><i class="fas fa-chevron-right"></i> Política de Devoluciones</a></li>
+                    <li><a href="/envios"><i class="fas fa-chevron-right"></i> Información de Envíos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4><i class="fas fa-map-marker-alt"></i> Ubicación</h4>
+                <div class="footer-location">
+                    <p><i class="fas fa-map-pin"></i> <strong>Barbosa, Santander</strong></p>
+                    <p><i class="fas fa-phone"></i> +57 300 123 4567</p>
+                    <p><i class="fas fa-envelope"></i> info@sportstorep ro.com</p>
+                    <p><i class="fas fa-clock"></i> Lun - Sáb: 8:00 AM - 8:00 PM</p>
                 </div>
             </div>
-            <div class="footer-bottom">
+
+            <div class="footer-section">
+                <h4><i class="fas fa-share-alt"></i> Síguenos</h4>
                 <div class="social-links">
-                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
                     <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 </div>
-                <p>&copy; 2025 Sport Store. Todos los derechos reservados.</p>
             </div>
-        </footer>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Sport Store Pro - Barbosa, Santander. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 </body>
 </html>
