@@ -24,9 +24,11 @@ def create_app():
     from app.routes import register
     from app.routes import store
     from app.routes import admin
+    from app.routes.client_route import bp_client
     app.register_blueprint(auth.bp)
     app.register_blueprint(register.bp)
     app.register_blueprint(store.bp)
     app.register_blueprint(admin.bp)
+    app.register_blueprint(bp_client)
 
     return app 

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Compras - Tienda Deportiva</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .compras-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .compras-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .compras-list {
+            list-style: none;
+            padding: 0;
+        }
+        .compras-list li {
+            background: #e3f2fd;
+            margin-bottom: 12px;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1.05em;
+        }
+        .volver-btn {
+            display: block;
+            margin: 25px auto 0 auto;
+            padding: 10px 22px;
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.2s;
+            text-align: center;
+        }
+        .volver-btn:hover {
+            background: #1565c0;
+        }
+    </style>
+</head>
+<body>
+    <div class="compras-container">
+        <h1>Historial de Compras</h1>
+        <ul class="compras-list">
+            {% for compra in compras %}
+                <li>
+                    <strong>{{ compra.producto.nombre }}</strong> -
+                    {{ compra.fecha.strftime('%d/%m/%Y') }} -
+                    ${{ compra.producto.precio }}
+                </li>
+            {% else %}
+                <li>No has realizado compras aún.</li>
+            {% endfor %}
+        </ul>
+        <a href="/user-dashboard" class="volver-btn">Volver</a>
+    </div>
+</body>
+</html>

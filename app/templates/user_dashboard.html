@@ -4,6 +4,37 @@
     <meta charset="UTF-8">
     <title>Mi cuenta - Tienda Deportiva</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .dashboard-container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            text-align: center;
+        }
+        .dashboard-btn {
+            display: block;
+            width: 80%;
+            margin: 18px auto;
+            padding: 16px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            color: #fff;
+        }
+        .btn-compras { background: #1976d2; }
+        .btn-compras:hover { background: #1565c0; }
+        .btn-perfil { background: #388e3c; }
+        .btn-perfil:hover { background: #2e7d32; }
+        .btn-logout { background: #d32f2f; }
+        .btn-logout:hover { background: #b71c1c; }
+    </style>
 </head>
 <body>
     <header>
@@ -21,12 +52,12 @@
         </nav>
     </header>
     <main>
-        <h2>Mi cuenta</h2>
-        <ul>
-            <li><a href="/mis-compras">Historial de compras</a></li>
-            <li><a href="/mis-datos">Datos personales</a></li>
-            <li><a href="/logout">Cerrar sesión</a></li>
-        </ul>
+        <div class="dashboard-container">
+            <h2>Bienvenido, {{ current_user.nombre }}!</h2>
+            <a href="/mis-compras" class="dashboard-btn btn-compras">Historial de compras</a>
+            <a href="/perfil" class="dashboard-btn btn-perfil">Datos personales</a>
+            <a href="/logout" class="dashboard-btn btn-logout">Cerrar sesión</a>
+        </div>
     </main>
     <footer>
         <a href="/faq">Preguntas frecuentes</a> |

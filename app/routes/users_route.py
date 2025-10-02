@@ -45,3 +45,13 @@ def delete(id):
     db.session.commit()
 
     return redirect(url_for('Book.index'))
+@bp_client.route('/perfil', methods=['GET', 'POST'])
+@login_required
+def perfil():
+    if request.method == 'POST':
+        current_user.nameUser = request.form['nameUser']
+        # El rol normalmente no se modifica por el usuario
+        db.session.commit()
+        flash('Datos actualizados correctamente.')
+        return redirect(url_for('client.perfil'))
+    return render_template('perfil.html')
